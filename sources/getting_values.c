@@ -1,0 +1,55 @@
+#include "push_swap.h"
+
+int get_min_value(t_stack *stack)
+{
+    t_node *current;
+    int min;
+
+    if(!stack || !stack->top)
+        return 0;
+    min = stack->top->value;
+    current = stack->top->next;
+    while(current->next)
+    {
+        if(current->value < min)
+            min = current->value;
+        current = current->next;
+    }
+    return min;
+}
+
+int get_max_value(t_stack *stack)
+{
+    t_node *current;
+    int max;
+
+    if(!stack || !stack->top)
+        return 0;
+    max = stack->top->value;
+    current = stack->top->next;
+    while(current->next)
+    {
+        if(current->value > max)
+            max = current->value;
+        current = current->next;
+    }
+    return max;
+}
+int get_value(t_stack *stack, int position)
+{
+    t_node *current;
+    int i = 0;
+    if(!stack || !stack->top || position < 0 || position >= stack->size)
+        return (0);
+    current = stack->top;
+    while(current && i < position)
+    {
+        i++;
+        current = current->next;
+    }
+    if(current)
+        return (current->value);
+    else
+        return (0);
+}
+

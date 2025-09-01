@@ -1,17 +1,34 @@
 #include "push_swap.h"
-#include "libft/libft.h"
+#include <unistd.h>
 
-void sa(t_stack *stack_a)
+void pa(t_stack *stack_a, t_stack *stack_b)
 {
-    t_node *first;
-    t_node *second;
-    if (stack_a == NULL || stack_a->size < 2)
+    t_node *first_b;
+    if (stack_b == NULL || stack_b->size == 0)
         return;
-    first = stack_a->top;
-    second = first->next;
-    first->next = second->next;
-    second->next = first;
-    stack_a->top = second;
+    first_b = stack_b->top;
+    stack_b->top = first_b->next;
+    first_b->next = stack_a->top;
+    stack_a->top = first_b;
 
-    write(1, "sa\n", 3);
+    stack_a->size++;
+    stack_b->size--;
+
+    write(1, "pa\n", 3);
+}
+
+void pb(t_stack *stack_a, t_stack *stack_b)
+{
+    t_node *first_a;
+    if (stack_a == NULL || stack_a->size == 0)
+        return;
+    first_a = stack_a->top;
+    stack_a->top = first_a->next;
+    first_a->next = stack_b->top;
+    stack_b->top = first_a;
+
+    stack_a->size--;
+    stack_b->size++;
+
+    write(1, "pb\n", 3);
 }

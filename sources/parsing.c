@@ -37,7 +37,7 @@ int valid_number_control(char *arg)
 	if (arg[i] == '-' || arg[i] == '+')
 		i++;
 	if (!arg[i])
-		return (1);
+		return (0);
 	while (arg[i])
 	{
 		if (arg[i] < '0' || arg[i] > '9')
@@ -77,29 +77,32 @@ void parse_arguments(t_stack *stack_a, char **argv)
     long long   *args_ll;
     long long   nmbr;
 
-    count = 0;
     while (argv[count + 1])
         count++;
-    args_ll = (long long *)malloc(sizeof(long long) * (count));
+    args_ll = (long long *)malloc(sizeof(long long) * count);
     if (!args_ll)
         error_exit();
     while (argv[i])
     {
-        if (valid_number_control(argv[i]) == 1)
+        if (valid_number_control(argv[i]) == 0)
+        {
+            free(args_ll);
             error_exit();
+        }
         nmbr = ft_atoll(argv[i]);
-        if (integer_limits_control(nmbr) == 1)
-            error_exit();
-            
-        // The index for args_ll should be i - 1 because argv[0] is the program name
-        args_ll[i - 1] = nmbr; 
-        push(stack_a, (int)nmbr);
+        args_ll[i - 1] = nmbr;
         i++;
     }
     if (doubles_control(args_ll, count) == 1)
     {
         free(args_ll);
         error_exit();
+    }
+    i = count - 1;
+    while (i >= 0)
+    {
+        push(stack_a, (int)args_ll[i]);
+        i--;
     }
     free(args_ll);
 }
