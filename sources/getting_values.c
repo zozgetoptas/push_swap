@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 int get_min_value(t_stack *stack)
 {
@@ -21,7 +21,7 @@ int get_min_value(t_stack *stack)
         return 0;
     min = stack->top->value;
     current = stack->top->next;
-    while(current->next)
+    while(current)
     {
         if(current->value < min)
             min = current->value;
@@ -39,7 +39,7 @@ int get_max_value(t_stack *stack)
         return 0;
     max = stack->top->value;
     current = stack->top->next;
-    while(current->next)
+    while(current)
     {
         if(current->value > max)
             max = current->value;
@@ -54,14 +54,11 @@ int get_value(t_stack *stack, int position)
     if(!stack || !stack->top || position < 0 || position >= stack->size)
         return (0);
     current = stack->top;
-    while(current && i < position)
+    while(i < position)
     {
         i++;
         current = current->next;
     }
-    if(current)
-        return (current->value);
-    else
-        return (0);
+    return (current->value);
 }
 

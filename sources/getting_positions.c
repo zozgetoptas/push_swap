@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 int get_position(t_stack *stack, int value)
 {
@@ -34,7 +34,7 @@ int get_min_position(t_stack *stack)
     if(!stack || !stack->top)
         return (-1);
     min_value = get_min_value(stack);
-    get_position(stack, min_value);
+    return(get_position(stack, min_value));
 }
 int get_max_position(t_stack *stack)
 {
@@ -42,5 +42,27 @@ int get_max_position(t_stack *stack)
     if(!stack || !stack->top)
         return (-1);
     max_value = get_max_value(stack);
-    get_position(stack, max_value);
+    return(get_position(stack, max_value));
+}
+void normalize_stack(t_stack *stack)
+{
+    t_node *current;
+    t_node *temp;
+    
+    current = stack->top;
+    while (current)
+    {
+        int rank = 0;
+        temp = stack->top;
+        while (temp)
+        {
+            if (current->value > temp->value)
+            {
+                rank++;
+            }
+            temp = temp->next;
+        }
+        current->value = rank; // Değeri yeni sıralı pozisyonuyla değiştir
+        current = current->next;
+    }
 }

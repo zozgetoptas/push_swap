@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 #include <unistd.h>
 
 void pa(t_stack *stack_a, t_stack *stack_b)
 {
     t_node *first_b;
-    if (stack_b == NULL || stack_b->size == 0)
+    if (!stack_b || !stack_b->top) // stack_b veya en üstteki düğüm boşsa işlem yapma
         return;
     first_b = stack_b->top;
     stack_b->top = first_b->next;
@@ -32,7 +32,7 @@ void pa(t_stack *stack_a, t_stack *stack_b)
 void pb(t_stack *stack_a, t_stack *stack_b)
 {
     t_node *first_a;
-    if (stack_a == NULL || stack_a->size == 0)
+    if (!stack_a || !stack_a->top) // stack_a veya en üstteki düğüm boşsa işlem yapma
         return;
     first_a = stack_a->top;
     stack_a->top = first_a->next;

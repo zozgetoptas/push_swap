@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 #include <unistd.h>
 
 void ra(t_stack *stack_a)
@@ -29,6 +29,10 @@ void ra(t_stack *stack_a)
         last = last->next;
     first->next = NULL;
     last->next = first;
+}
+void ra_write(t_stack *stack_a)
+{
+    ra(stack_a);
     write(1, "ra\n", 3);
 }
 void rb(t_stack *stack_b)
@@ -47,34 +51,26 @@ void rb(t_stack *stack_b)
         last = last->next;
     first->next = NULL;
     last->next = first;
+}
+void rb_write(t_stack *stack_b)
+{
+    rb(stack_b);
     write(1, "rb\n", 3);
 }
 void rr(t_stack *stack_a, t_stack *stack_b)
 {
-    t_node *first_a;
-    t_node *last_a;
-    t_node *first_b;
-    t_node *last_b;
+    int rotated = 0;
 
-    if (stack_a != NULL && stack_a->size >= 2)
+    if (stack_a && stack_a->size >= 2)
     {
-        first_a = stack_a->top;
-        last_a = first_a;
-        while (last_a->next != NULL)
-            last_a = last_a->next;
-        stack_a->top = first_a->next;
-        first_a->next = NULL;
-        last_a->next = first_a;
+        ra(stack_a);
+        rotated = 1;
     }
-    if (stack_b != NULL && stack_b->size >= 2)
+    if (stack_b && stack_b->size >= 2)
     {
-        first_b = stack_b->top;
-        last_b = first_b;
-        while (last_b->next != NULL)
-            last_b = last_b->next;
-        stack_b->top = first_b->next;
-        first_b->next = NULL;
-        last_b->next = first_b;
+        rb(stack_b);
+        rotated = 1;
     }
-    write(1, "rr\n", 3);
+    if (rotated)
+        write(1, "rr\n", 3);
 }

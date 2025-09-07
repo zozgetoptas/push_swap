@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 #include <unistd.h>
 
 void rra(t_stack *stack_a)
@@ -63,18 +63,14 @@ void rrb(t_stack *stack_b)
 
 void rrr(t_stack *stack_a, t_stack *stack_b)
 {
-    t_node *first_a;
-    t_node *last_a;
-    t_node *just_before_the_last_a;
-    t_node *first_b;
-    t_node *last_b;
-    t_node *just_before_the_last_b;
-
+    int rotated_a = 0;
+    int rotated_b = 0;
+    
     if (stack_a != NULL && stack_a->size >= 2)
     {
-        first_a = stack_a->top;
-        just_before_the_last_a = NULL;
-        last_a = first_a;
+        t_node *first_a = stack_a->top;
+        t_node *last_a = first_a;
+        t_node *just_before_the_last_a = NULL;
         while (last_a->next != NULL)
         {
             just_before_the_last_a = last_a;
@@ -84,12 +80,14 @@ void rrr(t_stack *stack_a, t_stack *stack_b)
             just_before_the_last_a->next = NULL;
         last_a->next = first_a;
         stack_a->top = last_a;
+        rotated_a = 1;
     }
+    
     if (stack_b != NULL && stack_b->size >= 2)
     {
-        first_b = stack_b->top;
-        just_before_the_last_b = NULL;
-        last_b = first_b;
+        t_node *first_b = stack_b->top;
+        t_node *last_b = first_b;
+        t_node *just_before_the_last_b = NULL;
         while (last_b->next != NULL)
         {
             just_before_the_last_b = last_b;
@@ -99,6 +97,9 @@ void rrr(t_stack *stack_a, t_stack *stack_b)
             just_before_the_last_b->next = NULL;
         last_b->next = first_b;
         stack_b->top = last_b;
+        rotated_b = 1;
     }
-    write(1, "rrr\n", 4);
+
+    if (rotated_a || rotated_b)
+        write(1, "rrr\n", 4);
 }

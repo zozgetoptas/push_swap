@@ -12,7 +12,7 @@
 
 #include <limits.h>
 #include <stdlib.h>
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 long long	ft_atoll(const char *str)
 {
@@ -34,22 +34,22 @@ long long	ft_atoll(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = res * 10 + (str[i] - '0');
-        if ((res * sign > INT_MAX) || (res * sign < INT_MIN))
-            error_exit();
-        i++;
+		i++;
 	}
 	return (sign * res);
 }
 
 int valid_number_control(char *arg)
 {
-    int	i;
+	int	i;
 
 	i = 0;
+	if (!arg || arg[0] == '\0')
+		return (1);
 	if (arg[i] == '-' || arg[i] == '+')
 		i++;
 	if (!arg[i])
-		return (0);
+		return (1);
 	while (arg[i])
 	{
 		if (arg[i] < '0' || arg[i] > '9')
@@ -60,61 +60,40 @@ int valid_number_control(char *arg)
 }
 int doubles_control(long long *args, int count)
 {
-    int i = 0;
-    int j;
+	int i = 0;
+	int j;
 	while (i < count - 1)
-    {
-        j = i + 1;
-        while (j < count)
-        {
-            if (args[i] == args[j])
-                return 1;
-            j++;
-        }
-        i++;
-    }
-    return 0;
+	{
+		j = i + 1;
+		while (j < count)
+		{
+			if (args[i] == args[j])
+				return 1;
+			j++;
+		}
+		i++;
+	}
+	return 0;
 }
 
 int integer_limits_control(long long nmbr)
 {
-    if (nmbr > INT_MAX || nmbr < INT_MIN)
-        return (1);
-    return (0);
+	if (nmbr > INT_MAX || nmbr < INT_MIN)
+		return (1);
+	return (0);
 }
-void parse_arguments(t_stack *stack_a, char **argv)
+t_stack *parse_arguments(char **argv)
 {
-    int         i = 1;
-    int         count = 0;
-    long long   *args_ll;
-    long long   nmbr;
+	int         count = 0;
+	t_stack *stack_a;
 
-    while (argv[count + 1])
-        count++;
-    args_ll = (long long *)malloc(sizeof(long long) * count);
-    if (!args_ll)
-        error_exit();
-    while (argv[i])
-    {
-        if (valid_number_control(argv[i]) == 0)
-        {
-            free(args_ll);
-            error_exit();
-        }
-        nmbr = ft_atoll(argv[i]);
-        args_ll[i - 1] = nmbr;
-        i++;
-    }
-    if (doubles_control(args_ll, count) == 1)
-    {
-        free(args_ll);
-        error_exit();
-    }
-    i = count - 1;
-    while (i >= 0)
-    {
-        push(stack_a, (int)args_ll[i]);
-        i--;
-    }
-    free(args_ll);
+	while (argv[count + 1])
+		count++;
+	while (count > 0)
+	{
+		long long nmbr = ft_atoll(argv[count]);
+		push(stack_a, (int)nmbr);
+		count--;
+	}
+	return stack_a;
 }

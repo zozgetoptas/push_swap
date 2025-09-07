@@ -10,19 +10,57 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	handle_errors(char **argv)
+#include "../includes/push_swap.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
+
+int handle_errors(char **argv)
 {
-	int i = 1;
-	if (doubles_control(argv))
-		return 1;
-	while(argv[i])
+    int i = 1;
+    int count = 0;
+    long long *args_ll;
+
+	while (argv[i])
+        i++;
+    count = i - 1;
+
+    if(count == 0)
 	{
-		if (valid_number_control(argv[i]))
-			return 1;
-		i++;
+        return 0;
+    }
+	args_ll = malloc(sizeof(long long) * count);
+    if (!args_ll)
+	{
+		error_exit();
 	}
-	return (0);
+        
+	i = 1;
+    while (argv[i])
+    {
+        if (valid_number_control(argv[i]))
+        {
+            free(args_ll);
+            return 1;
+        }
+        args_ll[i - 1] = ft_atoll(argv[i]);
+        if (integer_limits_control(args_ll[i - 1]))
+        {
+            free(args_ll);
+            error_exit();
+        }
+        i++;
+    }
+    if (doubles_control(args_ll, count))
+    {
+        free(args_ll);
+        error_exit();
+    }
+    
+    free(args_ll);
+    return 0;
 }
+
 void error_exit(void)
 {
 	write(2, "Error\n", 6);
