@@ -1,188 +1,188 @@
-# Push Swap - Sayı Sıralama Projesi
+# Push Swap - Integer Sorting Algorithm
 
-## Proje Hakkında
+## Overview
 
-**Push Swap**, verilen sayıları iki adet yığın (stack) kullanarak minimum sayıda işlem ile sıralayan optimize edilmiş bir C programıdır. Bu proje, 42 Okulu algoritma zorluğu olarak tasarlanmıştır.
+**Push Swap** is an optimized C program that sorts integers using two stacks (A and B) with the minimum number of operations. This project is a 42 School algorithm challenge designed to teach efficient sorting and optimization techniques.
 
-## Amaç
+## Objective
 
-İki stack (A ve B) kullanan sıralama algoritmasıdır:
-- **Stack A**: Giriş(input) ve çıkış(output) için kullanılır
-- **Stack B**: Yardımcı stack olarak kullanılır
+Sort numbers in Stack A using two stacks with predefined operations:
+- **Stack A**: Input and output stack
+- **Stack B**: Auxiliary stack for sorting
 
-Amaç, Stack A'daki sayıları artan sırada sıralamaktır ve bunu minimum sayıda işlem ile yapmaktır.
+The goal is to sort Stack A in ascending order using the minimum number of operations possible.
 
-## Desteklenen İşlemler
+## Supported Operations
 
-### Stack A Üzerinde İşlemler
-- **sa**: Stack A'nın ilk iki elemanını yer değiştirir
-- **pa**: Stack B'nin en üstündeki elemanı Stack A'ya taşır
-- **ra**: Stack A'nın tüm elemanlarını bir pozisyon yukarıya kaydırır
-- **rra**: Stack A'nın tüm elemanlarını bir pozisyon aşağıya kaydırır
+### Stack A Operations
+- **sa**: Swap the first two elements of Stack A
+- **pa**: Push the top element from Stack B to Stack A
+- **ra**: Rotate Stack A upward (top element goes to bottom)
+- **rra**: Rotate Stack A downward (bottom element goes to top)
 
-### Stack B Üzerinde İşlemler
-- **pb**: Stack A'nın en üstündeki elemanı Stack B'ye taşır
-- **rb**: Stack B'nün tüm elemanlarını bir pozisyon yukarıya kaydırır
-- **rrb**: Stack B'nün tüm elemanlarını bir pozisyon aşağıya kaydırır
+### Stack B Operations
+- **pb**: Push the top element from Stack A to Stack B
+- **rb**: Rotate Stack B upward (top element goes to bottom)
+- **rrb**: Rotate Stack B downward (bottom element goes to top)
 
-## Sıralama Algoritmaları
+## Sorting Algorithms
 
-Program, input boyutuna göre en uygun sıralama algoritmasını seçer:
+The program selects the optimal sorting algorithm based on input size:
 
-| Eleman Sayısı | Algoritma | Açıklama |
+| Element Count | Algorithm | Description |
 |---|---|---|
-| 2 | Easy Sort | 1 işlem |
-| 3 | Easy Sort | En fazla 2-3 işlem |
-| 4-5 | Easy Sort | Optimizasyonlu sıralama |
-| 6+ | Chunk Sort / Hybrid | Input boyutuna göre optimize edilmiş |
+| 2 | Easy Sort | 1 operation |
+| 3 | Easy Sort | Max 2-3 operations |
+| 4-5 | Easy Sort | Optimized sorting |
+| 6+ | Chunk Sort / Hybrid | Optimized for input size |
 
-### 1. Easy Sorting (2-5 Eleman)
-- Küçük boyutlu inputlar için özel hareket kombinasyonları
-- Minimum işlem sayısı garantisi
+### 1. Easy Sorting (2-5 Elements)
+- Special move combinations for small inputs
+- Guarantees minimum number of operations
 
-### 2. Chunk Sort (6+ Eleman)
-- Stack A'yı chunk'lara böler
-- Dinamik chunk boyutu hesaplayıp, Stack B'ye taşır
-- Hybrid yöntem ile sıralama optimizasyonu
+### 2. Chunk Sort (6+ Elements)
+- Divides Stack A into chunks
+- Transfers chunks to Stack B with dynamic sizing
+- Hybrid optimization method for sorting
 
-### 3. Normalizasyon (Normalize)
-- Input sayıları 0'dan başlayan rank değerlerine dönüştürü
-- Sayıların aralığını görmezden gelerek optimize eder
+### 3. Normalization
+- Converts input numbers to rank values starting from 0
+- Optimizes by normalizing the range of numbers
 
-## Proje Yapısı
+## Project Structure
 
 ```
 push_swap/
-├── Makefile                 # Derleme komutları
+├── Makefile                 # Compilation commands
 ├── includes/
-│   └── push_swap.h         # Header dosyası, tanımlamalar
+│   └── push_swap.h         # Header file, definitions
 └── sources/
-    ├── main.c              # Program giriş noktası
-    ├── parsing.c           # Argümanları parse etme
-    ├── arg_checks.c        # Argüman doğrulaması
-    ├── error_handling.c    # Hata yönetimi
-    ├── easy_sorting.c      # 2-5 eleman için sıralama
-    ├── easy_sorting_utils.c # Yardımcı işlevler
-    ├── hard_sorting.c      # 6+ eleman için sıralama
-    ├── chunk_sort_stuff.c  # Chunk sıralama 1
-    ├── chunk_sort_stuff_2.c # Chunk sıralama 2
-    ├── radix_sort_stuff.c  # Radix sort uygulaması
-    ├── normalize.c         # Normalizasyon işlemi
-    ├── optimising.c        # Optimizasyon işlevleri
-    ├── pushing.c           # Pa/Pb işlemleri
-    ├── swapping.c          # Swap işlemleri
-    ├── rotating.c          # Ra/Rb işlemleri
-    └── reverse_rotating.c  # Rra/Rrb işlemleri
+    ├── main.c              # Program entry point
+    ├── parsing.c           # Parse arguments
+    ├── arg_checks.c        # Argument validation
+    ├── error_handling.c    # Error management
+    ├── easy_sorting.c      # Sorting for 2-5 elements
+    ├── easy_sorting_utils.c # Helper functions
+    ├── hard_sorting.c      # Sorting for 6+ elements
+    ├── chunk_sort_stuff.c  # Chunk sort 1
+    ├── chunk_sort_stuff_2.c # Chunk sort 2
+    ├── radix_sort_stuff.c  # Radix sort implementation
+    ├── normalize.c         # Normalization process
+    ├── optimising.c        # Optimization functions
+    ├── pushing.c           # Pa/Pb operations
+    ├── swapping.c          # Swap operations
+    ├── rotating.c          # Ra/Rb operations
+    └── reverse_rotating.c  # Rra/Rrb operations
 ```
 
-## Veri Yapıları
+## Data Structures
 
-### t_node (Düğüm)
+### t_node (Node)
 ```c
 typedef struct s_node
 {
-    int             value;      // Sayı değeri
-    struct s_node   *next;      // Sonraki düğüme işaretçi
+    int             value;      // Number value
+    struct s_node   *next;      // Pointer to next node
 }   t_node;
 ```
 
-### t_stack (Yığın)
+### t_stack (Stack)
 ```c
 typedef struct s_stack
 {
-    t_node  *top;   // En üstteki düğüm
-    int     size;   // Yığının boyutu
+    t_node  *top;   // Top node
+    int     size;   // Stack size
 }   t_stack;
 ```
 
-## Derleme ve Çalıştırma
+## Compilation and Execution
 
-### Derleme
+### Compilation
 ```bash
 make
 ```
 
-### Çalıştırma
+### Execution
 ```bash
-./push_swap <sayılar>
+./push_swap <numbers>
 ```
 
-### Örnekler
+### Examples
 ```bash
-./push_swap 3 2 1 0             # Çıktı: Sıralama işlemleri
-./push_swap 50 3 100 -42 5      # Pozitif ve negatif sayılar
-./push_swap 1 2 3 4 5           # Zaten sıralı (hiç çıktı yok)
+./push_swap 3 2 1 0             # Outputs: Sorting operations
+./push_swap 50 3 100 -42 5      # Positive and negative numbers
+./push_swap 1 2 3 4 5           # Already sorted (no output)
 ```
 
-### Checker ile Test Etme
+### Testing with Checker
 ```bash
 ./push_swap 3 2 1 0 | ./checker_linux 3 2 1 0
 ```
 
-## Derleme Komutları
+## Make Commands
 
 ```bash
-make        # Program derle
-make clean  # Object dosyalarını sil
-make fclean # Object ve executable'ı sil
-make re     # Temizle ve yeniden derle
+make        # Compile the program
+make clean  # Remove object files
+make fclean # Remove object files and executable
+make re     # Clean and recompile
 ```
 
-## Giriş Validasyonu
+## Input Validation
 
-Program aşağıdaki kontrolleri yapır:
+The program performs the following checks:
 
-1. ✓ Yalnızca sayısal giriş kabul eder
-2. ✓ Aktüel sayı aralığını kontrol eder (INT_MIN - INT_MAX)
-3. ✓ Tekrarlayan sayıları reddeder
-4. ✓ Boş argümanları reddeder
+1. ✓ Accepts only numeric input
+2. ✓ Validates integer range (INT_MIN - INT_MAX)
+3. ✓ Rejects duplicate numbers
+4. ✓ Rejects empty arguments
 
-Hata durumunda:
+On error, outputs:
 ```
 Error
 ```
 
-## Optimizasyon Stratejileri
+## Optimization Strategies
 
-1. **Chunk Boyutu Dinamik Hesaplama**: Input boyutuna uyarlanan chunk boyutu
-2. **En Uygun Dönüş Yönü**: Yukarı/Aşağı rotate seçimi minimum adım için
-3. **Akıllı Yer Değiştirme**: Tekrarlayan işlemlerin elimine edilmesi
-4. **Hybrid Sıralama**: Chunk sort + radix sort kombinasyonu
+1. **Dynamic Chunk Size Calculation**: Chunk size adapted to input scale
+2. **Optimal Rotation Direction**: Selects up/down rotation for minimum steps
+3. **Smart Move Elimination**: Removes redundant consecutive operations
+4. **Hybrid Sorting**: Combines chunk sort + radix sort techniques
 
-## Test Ortamı
+## Tested Environment
 
-- **İşletim Sistemi**: Linux/Unix
-- **Derleyici**: GCC (cc)
-- **Standart**: C89/C90
+- **Operating System**: Linux/Unix
+- **Compiler**: GCC (cc)
+- **Standard**: C89/C90
 - **Flags**: -Wall -Wextra -Werror (Strict compilation)
 
-## Algoritma Karmaşıklığı
+## Algorithm Complexity
 
-- **En İyi Durum**: O(n)  - Zaten sıralı
-- **Orta Durum**: O(n log n) - Chunk sort
-- **En Kötü Durum**: O(n²) - Worst case sıralama
+- **Best Case**: O(n) - Already sorted
+- **Average Case**: O(n log n) - Chunk sort
+- **Worst Case**: O(n²) - Worst case sorting scenario
 
-## Yazarlar
+## Author
 
-- **ztoptas** - 42 Kocaeli Öğrencisi
+- **ztoptas** - 42 Kocaeli Student
 - Email: ztoptas@student.42kocaeli.com
 
-## Lisans
+## License
 
-Bu proje 42 okulu eğitim projesidir.
+This is a 42 School educational project.
 
 ---
 
-## İlginç Bilgiler
+## Interesting Details
 
-- Program, saf **C** ile yazılmış (harici kütüphane yok)
-- **Linked List** veri yapısı kullanılır
-- **42 Standard** yazım kurallarına uyar
-- **Deterministic** (belirleyici) - Aynı input her zaman aynı çıktı verir
+- Pure **C** implementation (no external libraries)
+- Uses **Linked List** data structure
+- Follows **42 Norm** code style guidelines
+- **Deterministic** - Same input always produces same output
 
-## Kaynaklar
+## References
 
-- 42 Okulu Öğretimi
-- Stack ve Linked List Algoritmaları
-- Sıralama Algoritmaları (Sorting)
-- Optimizasyon Teknikleri
+- 42 School Curriculum
+- Stack and Linked List Algorithms
+- Sorting Algorithms Theory
+- Code Optimization Techniques
